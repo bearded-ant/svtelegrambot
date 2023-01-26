@@ -6,7 +6,6 @@ import com.ant.svtelegrambot.firebase.LocationsCallback
 import com.ant.svtelegrambot.model.ChatMember
 import com.ant.svtelegrambot.model.ResourceLocation
 import com.ant.svtelegrambot.parser.ParseLocation
-import com.google.firebase.database.FirebaseDatabase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
@@ -30,10 +29,6 @@ class Bot : TelegramLongPollingBot() {
     @Value("\${bot.token}")
     private val botToken: String? = null
 
-    private val dbInstance = FirebaseDatabase.getInstance()
-    private val dbLocationsRef = dbInstance.getReference("locstatus")
-    private val dbUserRef = dbInstance.getReference("chatMember")
-
     private val userTimeOptionsFlag = mutableSetOf<String>()
 
     override fun onUpdateReceived(update: Update) {
@@ -45,7 +40,7 @@ class Bot : TelegramLongPollingBot() {
                 val user = ChatMember(userId, userName, userChatId)
                 val dbUserFormat = mutableMapOf<String, ChatMember>()
                 dbUserFormat[user.id] = user
-                dbUserRef.updateChildrenAsync(dbUserFormat as Map<String, Any>)
+                firebase!!.dbUserRef.updateChildrenAsync(dbUserFormat as Map<String, Any>)
                 sendDefaultMessage(userChatId, "привет, $userName")
             }
 
