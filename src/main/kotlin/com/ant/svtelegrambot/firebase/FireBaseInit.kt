@@ -6,8 +6,6 @@ import com.google.firebase.FirebaseOptions
 import org.springframework.stereotype.Component
 import java.io.FileInputStream
 
-private const val BASE_URL = "https://vsmuta-f3e3d-default-rtdb.europe-west1.firebasedatabase.app"
-private const val TOKEN_FILE = "/home/ant/IdeaProjects/svtelegrambot/src/main/resources/vsmuta-f3e3d-firebase-adminsdk-3dzma-12edada204.json"
 
 @Component
 class FireBaseInit {
